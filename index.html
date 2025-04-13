@@ -1,0 +1,798 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<!-- Page Title Here -->
+		<title>
+			婧婧の个人博客
+		</title>
+		<!-- Disable screen scaling-->
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, user-scalable=0">
+		<!-- Place favicon.ico and apple-touch-icon(s) in the root directory -->
+		<!-- Initializer -->
+
+		<!-- 基本ICO格式 -->
+		<link rel="icon" href="images/logo_only.png" type="image/x-icon">
+
+		<!-- SVG格式(现代浏览器支持) -->
+		<link rel="icon" href="images/logo_only.png" type="image/svg+xml">
+
+		<!-- 苹果设备专用 -->
+		<link rel="apple-touch-icon" href="images/logo_only.png">
+
+		<!-- 多尺寸支持 -->
+		<link rel="icon" type="image/png" sizes="32x32" href="images/logo_only.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="images/logo_only.png">
+
+		<!-- 微软磁贴支持 -->
+		<meta name="msapplication-TileColor" content="#ffffff">
+		<meta name="msapplication-TileImage" content="/mstile-144x144.png">
+
+		<!-- 主题颜色(部分浏览器支持) -->
+		<meta name="theme-color" content="#ffffff">
+
+		<link rel="stylesheet" href="css/normalize.css">
+		<!-- Web fonts and Web Icons -->
+		<link rel="stylesheet" href="css/pageloader.css">
+		<link rel="stylesheet" href="css/stylesheet.css">
+		<link rel="stylesheet" href="css/stylesheet_1.css">
+		<link rel="stylesheet" href="https://cdn.bootcss.com/ionicons/1.5.2/css/ionicons.min.css">
+		<!-- Vendor CSS style -->
+		<link rel="stylesheet" href="css/foundation.min.css">
+		<link rel="stylesheet" href="css/jquery.fullPage.css">
+		<link rel="stylesheet" href="css/vegas.min.css">
+		<!-- Main CSS files -->
+		<link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" href="css/main_responsive.css">
+		<link rel="stylesheet" href="css/style-font1.css">
+		<script src="js/modernizr-2.7.1.min.js">
+		</script>
+		<script src="js/sakura.js">
+		</script>
+		<style type="text/css">
+			/**普通指针样式**/ body{cursor:url(css/dorcandy.cur),default;}//默认鼠标效果 /**链接指针样式**/
+			a:hover{cursor:url(css/pointer.cur),pointer;}//链接选择效果
+		</style>
+	</head>
+	<body id="menu" class="alt-bg">
+
+	<style>
+		/* 弹窗样式 */
+        .cookie-popup {
+          overscroll-behavior: contain;
+          -webkit-overflow-scrolling: touch;
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 80%;
+          max-width: 500px;
+          background: #fff;
+          border-radius: 8px;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+          padding: 25px;
+          z-index: 1000;
+          text-align: center;
+        }
+
+        /* 半透明遮罩 */
+        .cookie-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0,0,0,0.7);
+          z-index: 999;
+        }
+
+        /* 按钮样式 */
+        .cookie-btn {
+          padding: 10px 20px;
+          margin: 10px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          font-weight: bold;
+        }
+
+        .agree-btn {
+          background-color: #009999;
+          color: white;
+        }
+
+        .disagree-btn {
+          background-color: #f44336;
+          color: white;
+        }
+
+        /* 阻止滚动 */
+        .body-no-scroll {
+          overflow: hidden;
+          position: fixed;
+          width: 100%;
+        }
+	</style>
+
+	<!-- Cookie 同意弹窗 -->
+	<div class="cookie-overlay" id="cookieOverlay"></div>
+	<div class="cookie-popup" id="cookiePopup">
+		<h2>本站協議</h2>
+	    <p>1.本站所有內容全由婧婧(Qiu Hujing)一個人搭建，純CSS+HTML代碼重構，版權歸本人所有代碼禁止未授權搬運！</p>
+		<p>2.本站所有內容皆為合法內容，後續營運皆為個人完成，無任何利益關繫或者公司契約，因此所有本站內容支援二創，但請勿惡意抄襲，詆毀，非法倒賣！一經發現，侵權必究！</p>
+		<p>3.感謝您您使用我站資源和觀看我的有關內容，感謝妳對我的支援！歡迎關註我的社交媒體！</p>
+		<p>4,後續使用資源或網站過程中如果出現Bug請反饋到本站Discord以及QQ頻道，無需聯繫本人！</p>
+		<p>5.如果後期開發論壇部分，需要認證後才能使用！（保證符合《中華人民共和國網路安全法》愛國積極嚮上內容！)</p></p>
+		<div>
+			<button class="cookie-btn agree-btn" id="agreeBtn">同意</button>
+			<button class="cookie-btn disagree-btn" id="disagreeBtn">不同意</button>
+		</div>
+	</div>
+
+	<script>
+		// 检查是否已经同意过Cookie
+        function checkCookieConsent() {
+          return localStorage.getItem('cookieConsent') === 'true';
+        }
+
+        // 显示Cookie弹窗
+        function showCookiePopup() {
+          document.getElementById('cookiePopup').style.display = 'block';
+          document.getElementById('cookieOverlay').style.display = 'block';
+          document.body.classList.add('body-no-scroll');
+        }
+
+        // 隐藏Cookie弹窗
+        function hideCookiePopup() {
+          document.getElementById('cookiePopup').style.display = 'none';
+          document.getElementById('cookieOverlay').style.display = 'none';
+          document.body.classList.remove('body-no-scroll');
+        }
+
+        // 用户同意Cookie
+        function agreeToCookies() {
+          localStorage.setItem('cookieConsent', 'true');
+          hideCookiePopup();
+        }
+
+        // 用户不同意Cookie
+        function disagreeToCookies() {
+          localStorage.setItem('cookieConsent', 'false');
+          // 如果不同意，可以重定向到其他页面或显示提示
+          alert('您需要同意Cookie政策才能继续使用本网站。');
+          window.location.href = 'about:blank'; // 或者重定向到其他页面
+        }
+
+        // 页面加载时检查Cookie同意状态
+        window.onload = function() {
+          if (!checkCookieConsent()) {
+            showCookiePopup();
+          }
+
+          // 绑定按钮事件
+          document.getElementById('agreeBtn').addEventListener('click', agreeToCookies);
+          document.getElementById('disagreeBtn').addEventListener('click', disagreeToCookies);
+        };
+	</script>
+		<div class="page-loader" id="page-loader">
+			<div>
+				<i class="ion ion-loading-d">
+				</i>
+				<p>
+					💕歡迎來到婧婧的BLOG!
+				</p>
+			</div>
+		</div>
+		<header class="header-top">
+			<div class="logo">
+				<a href="#home">
+					<img src="images/logo_large.png" alt="Logo Brand">
+				</a>
+			</div>
+			<div class="menu clearfix">
+				<a href="index.html">
+					<span style="color:#FFD700;">
+						主頁
+					</span>
+				</a>
+
+				<style>
+					/* 基础样式 */
+                    * {
+                      margin: 0;
+                      padding: 0;
+                      box-sizing: border-box;
+                      font-family: Arial, sans-serif;
+                    }
+
+                    /* 发布按钮容器 - 添加相对定位 */
+                    .dropdown {
+                      position: relative;
+                      display: inline-block;
+                    }
+
+                    /* 金色发布按钮样式 */
+                    .dropdown-btn {
+                      background: none;
+                      border: none;
+                      cursor: pointer;
+                      font-size: 16px;
+                      padding: 8px 15px;
+                    }
+
+                    .dropdown-btn span {
+                      color: #FFD700; /* 金色 */
+                      font-weight: bold;
+                    }
+
+                    /* 下拉菜单样式 */
+
+                    .dropdown-content {
+                      color: #333; /* 确保文字颜色可见 */
+                      background-color: white; /* 背景色对比明显 */
+                      z-index: 1000; /* 提高层级 */
+                      position: absolute; /* 必须搭配 absolute/fixed 使用 */
+                      display: none;
+                      position: absolute;
+                      top: 100%;
+                      left: 0;
+                      background-color: #009999;
+                      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+                      border-radius: 4px;
+                      transition: all 0.3s ease;
+                      opacity: 0;
+                      visibility: hidden;
+                    }
+
+                    /* 下拉菜单项样式 */
+                    .dropdown-content a {
+                      color: #333;
+                      padding: 12px 16px;
+                      text-decoration: none;
+                      display: block;
+                      transition: background-color 0.3s;
+                    }
+
+                    .dropdown-content a:hover {
+                      background-color: #f1f1f1;
+                    }
+
+
+                    /* 显示下拉菜单 */
+                    .dropdown:hover .dropdown-content {
+                      opacity: 1;
+                      visibility: visible;
+                      display: block;
+                    }
+
+                    /* 添加小箭头图标 */
+                    .dropdown:after {
+                      content: "▼";
+                      color: #FFD700;
+                      font-size: 10px;
+                      position: absolute;
+                      right: 5px;
+                      top: 50%;
+                      transform: translateY(-50%);
+                    }
+
+				</style>
+
+				<!-- 带下拉菜单的发布按钮 -->
+				<div class="dropdown">
+					<a href="fabu.html" class="dropdown-btn">
+						<span style="color:#FFD700;">发布</span>
+					</a>
+					<div class="dropdown-content">
+						<a href="passage.html">文章</a>
+						<a href="product.html">產品</a>
+						<a href="action.html">活動</a>
+						<a href="service.html">服務</a>
+					</div>
+				</div>
+			</div>
+		</header>
+		<nav class="quick-link count-6 nav-left">
+			<ul id="qmenu">
+				<li data-menuanchor="home">
+					<a href="#home">
+						🎪
+					</a>
+					<span class="title">
+						欢迎主页
+					</span>
+				</li>
+				<li data-menuanchor="when">
+					<a href="#s-when">
+						🍰
+					</a>
+					<span class="title">
+						自我介绍
+					</span>
+				</li>
+				<li data-menuanchor="register">
+					<a href="#s-register">
+						🐍
+					</a>
+					<span class="title">
+						社交媒体
+					</span>
+				</li>
+				<li data-menuanchor="about-us">
+					<a href="#s-about-us">
+						👒
+					</a>
+					<span class="title">
+						自我誓言
+					</span>
+				</li>
+				<li data-menuanchor="contact">
+					<a href="#s-contact">
+						📧
+					</a>
+					<span class="title">
+						联系方式
+					</span>
+				</li>
+
+				<li data-menuanchor="music">
+					<script>
+						document.getElementById('neteasePlayBtn').addEventListener('click', function(e) {
+                          e.preventDefault();
+
+                          const playerContainer = document.getElementById('musicPlayer');
+
+                          if(playerContainer.innerHTML === '') {
+                            // 第一次点击时创建播放器
+                            const iframe = document.createElement('iframe');
+                            iframe.src = "http://music.163.com/outchain/player?type=2&id=1394402692&auto=1&height=66";
+                            iframe.width = "100%";
+                            iframe.height = "86";
+                            iframe.frameBorder = "no";
+                            iframe.allow = "autoplay";
+
+                            playerContainer.appendChild(iframe);
+                            playerContainer.style.display = 'block';
+
+                            // 修改按钮文字
+                            this.querySelector('.title').textContent = "正在播放";
+                          } else {
+                            // 切换显示/隐藏
+                            playerContainer.style.display =
+                              playerContainer.style.display === 'none' ? 'block' : 'none';
+                          }
+                        });
+					</script>
+					<a href=http://music.163.com/outchain/player?type=2&id=1394402692&auto=1&height=66" class="play-button-style" id="neteasePlayBtn">
+						<svg viewBox="0 0 24 24" width="24" height="24" class="play-icon">
+							<path d="M8 5v14l11-7z" fill="currentColor"/>
+						</svg>
+						<span class="title">
+      						播放音乐
+    					</span>
+						<svg viewBox="0 0 24 24" width="16" height="16" class="loading-icon" style="display:none;margin-left:8px;">
+							<path d="M12,4V2A10,10 0 0,0 2,12H4A8,8 0 0,1 12,4Z" fill="currentColor"/>
+						</svg>
+					</a>
+				</li>
+			</ul>
+		</nav>
+		<div class="page-cover" id="home">
+			<div class="cover-bg pos-abs full-size bg-img" data-image-src="https://imgs.aixifan.com/live/1495974356790/1495974356790.jpg">
+			</div>
+			<div class="cover-bg pos-abs full-size slide-show">
+				<i class="img" data-src="https://www.toopic.cn/public/uploads/small/1743560735324174356073588.jpg">
+				</i>
+				<i class="img" data-src="https://s.panlai.com/zb_users/upload/2025/04/bizhihui_com_202504061743931036876747.jpg-arthumbs">
+				</i>
+				<i class="img" data-src="https://s.panlai.com/zb_users/upload/2025/04/bizhihui_com_202504061743931084700236.jpg-arthumbs">
+				</i>
+				<i class="img" data-src="https://s.panlai.com/zb_users/upload/2025/04/bizhihui_com_202504061743930746829967.jpg-arthumbs">
+				</i>
+				<i class="img" data-src="https://s.panlai.com/zb_users/upload/2025/04/bizhihui_com_202504061743930933168309.jpg-arthumbs">
+				</i>
+				<i class="img" data-src="https://s.panlai.com/zb_users/upload/2025/04/bizhihui_com_202504021743563617491560.jpg-arthumbs">
+				</i>
+				<i class="img" data-src="https://s.panlai.com/zb_users/upload/2025/04/bizhihui_com_202504021743559674415856.jpg-arthumbs">
+				</i>
+				<i class="img" data-src="https://s.panlai.com/zb_users/upload/2025/03/20250331145709174340422978262.jpg-arthumbs">
+				</i>
+				<i class="img" data-src="https://s.panlai.com/zb_users/upload/2025/03/20250326145501174297210150366.jpg-arthumbs">
+				</i>
+			</div>
+			<div class="cover-bg pos-abs full-size bg-color" data-bgcolor="rgba(51, 2, 48, 0.12)">
+			</div>
+		</div>
+		<main class="page-main" id="mainpage">
+			<div class="section page-home page page-cent" id="s-home">
+				<div class="logo-container">
+					<img class="h-logo" src="images/logo_only.png" alt="Logo">
+				</div>
+				<section class="content">
+					<header class="header">
+						<div class="h-left">
+							<h2 title="点这里访问博客~">
+								<a href="https://afqaq.com/">
+									<span style="color:#FFFFFF;">
+										婧婧
+									</span>
+									<strong>
+										<span style="color:#009999;">
+											BLOG
+										</span>
+									</strong>
+								</a>
+							</h2>
+						</div>
+						<div class="h-right">
+							<h3>
+								神祕 而
+								<br>
+								清晰
+							</h3>
+							<h4 class="subhead">
+								<a href="#when">
+									前進！！不擇手段地前進！
+								</a>
+							</h4>
+						</div>
+					</header>
+				</section>
+				<div>
+					<article class="text">
+						<form id="mail-subscription" class="form magic send_email_form" method="get"
+						action="ajaxserver/serverfile.php">
+							<p class="invite center">
+								<script type="text/javascript" src="https://quote.51.la/q?id=20628121&mb=1">
+								</script>
+							</p>
+						</form>
+					</article>
+				</div>
+				<footer class="p-footer p-scrolldown">
+					<a href="#s-when">
+						<div class="arrow-d">
+							<div class="before">
+								期&nbsp;待&nbsp;已&nbsp;久
+							</div>
+							<div class="after">
+								無&nbsp;需&nbsp;多&nbsp;言
+							</div>
+							<div class="circle">
+							</div>
+						</div>
+					</a>
+				</footer>
+			</div>
+			<div class="section page-when page page-cent" id="s-when">
+				<section class="content">
+					<div>
+						<div class="site-config" data-date="7/18/2021 00:00:00" data-date-timezone="+0">
+						</div>
+						<header class="header">
+							<header class="p-title">
+							<h3>
+								<span style="color:#FFFFF8;">
+									🍦 你是誰？
+								</span>
+							</h3>
+						</header>
+						<div class="title">
+							<p>
+							<div class="digit hours">
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;屏光如雪映深宵，
+							鍵底風煙萬裏遙。
+							未識君顏先識句，
+							一行詩是一長橋。在這裏相見，是我們的緣分嗎？
+							</div>
+							<p>
+							<div class="digit hours">
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;或許是吧......
+							</div>
+							<p>&nbsp;<p>
+							<p>&nbsp;<p>
+							<header class="header">
+								<header class="p-title">
+									<h3>
+								<span style="color:#FFFFF8;">
+									🍦 那我又是誰？
+								</span>
+									</h3>
+								</header>
+								<div class="title">
+									<p>
+									<div class="digit hours">
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我嘛，凡人一個，有點害羞欸，一個平凡的HypxielPVP玩家,一個平凡的火影與絕區零雙修的小主播罷了
+									</div>
+									<p>
+									<div class="digit hours">
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;魯迅曾言："其實地上本沒有路，走的人多了，也便成了路"（《故鄉》），這種在平凡中開掘非凡的辯證思維，恰是其文學魅力的核心。他筆下的平凡人生，總是裹挾著"於無聲處聽驚雷"的力量，在瑣碎處照見整個民族的靈魂睏境。
+									</div>
+								</div>
+							</div>
+				</section>
+				<footer class="p-footer p-scrolldown">
+					<a href="#s-register">
+						<div class="arrow-d">
+							<div class="before">
+								心&nbsp;之
+							</div>
+							<div class="after">
+								所&nbsp;嚮
+							</div>
+							<div class="circle">
+							</div>
+						</div>
+					</a>
+				</footer>
+			</div>
+			<div class="section page-register page page-cent " id="s-register">
+				<section class="content">
+					<header class="p-title">
+						<h3>
+							<span style="color:#FFFFFF;">
+								🍭 吾の社交媒體
+							</span>
+						</h3>
+					</header>
+					<div>
+						<article class="text">
+							<p>
+								<a href="https://space.bilibili.com/1604605786" target="_blank">
+									<span style="color:#FFFFFF;">
+										📺 Bilibili ： 點選跳轉
+									</span>
+								</a>
+							</p>
+							<p>
+								<a href="https://github.com/QiuHuJing" target="_blank">
+									<span style="color:#FFFFFF;">
+										🐈‍⬛ Github ： 點選跳轉
+									</span>
+								</a>
+							</p>
+
+							<p>
+								<a href="https://pd.qq.com/s/89ukdmg1q" target="_blank">
+									<span style="color:#FFFFFF;">
+										📻 QQ頻道 ： pd70076251
+									</span>
+								</a>
+							</p>
+							<p>
+								<a href="https://discord.com" target="_blank">
+									<span style="color:#FFFFFF;">
+										🚇 Discord ： 59ki3sxe1g
+									</span>
+								</a>
+							</p>
+
+							<form id="mail-subscription" class="form magic send_email_form" method="get"
+							action="ajaxserver/serverfile.php">
+								<p class="invite center">
+									我已經忘記過往，重新開始！
+								</p>
+							</form>
+						</article>
+					</div>
+				</section>
+				<footer class="p-footer p-scrolldown">
+					<a href="#s-about-us">
+						<div class="arrow-d">
+							<div class="before">
+								古&nbsp;往&nbsp;今&nbsp;来
+							</div>
+							<div class="after">
+								今&nbsp;兮&nbsp;有&nbsp;亦
+							</div>
+							<div class="circle">
+							</div>
+						</div>
+					</a>
+				</footer>
+			</div>
+			<div class="section page-about page page-cent" id="s-about-us">
+				<section class="content">
+					<header class="p-title">
+						<h3>
+							🐽 關於我的誓言
+						</h3>
+						<h2>
+							当你
+							<span class="bold">
+								问我
+							</span>
+							什么
+							<span class="bold">
+								是今昔非比
+							</span>
+							呢？
+						</h2>
+					</header>
+					<article class="text">
+						<p>
+							&emsp;&emsp; 那麽多年的經歴告訴我了一個道理，人生無常態，只有堅持下去，才有希望，從我天生的身體缺陷的角度描述，我正在努力！
+						</p>
+						<p>
+							&emsp;&emsp; 這裏要感謝陶淵明先生，這一切有他所闡述！
+						</p>
+					</article>
+					<div class="sender">
+						<div>
+							<img src="images/kasa.jpg">
+						</div>
+						<div>
+							<div class="left_triangle">
+							</div>
+							<span>
+								<span style="color:#009999;">
+									&nbsp;既自以心為形役，奚悵惘而獨悲&nbsp;
+								</span>
+							</span>
+						</div>
+					</div>
+					<div class="receiver">
+						<div>
+							<img src="images/img_avatar.jpg">
+						</div>
+						<div>
+							<div class="right_triangle" style="color:#009999;">
+							</div>
+							<span>
+								<span style="color:#009999;">
+									悟已往之不諫，知來者之可追
+								</span>
+								<span style="color:#4C33E5;">
+								</span>
+								<br>
+							</span>
+						</div>
+					</div>
+				</section>
+				<footer class="p-footer p-scrolldown">
+					<a href="#s-contact">
+						<div class="arrow-d">
+							<div class="before">
+								ScarletDor
+							</div>
+							<div class="after">
+								婧婧的&nbsp;窝
+							</div>
+							<div class="circle">
+							</div>
+						</div>
+					</a>
+				</footer>
+			</div>
+			<div class="section page-contact page page-cent" id="s-contact">
+				<section class="content">
+					<header class="p-title">
+						<h3>
+							🌲 吾の聯繫方式
+						</h3>
+					</header>
+					<div class="contact">
+						<div class="row">
+							<div class="medium-6 columns left">
+								<ul>
+									<li>
+										<h4>
+											Email
+										</h4>
+										<p>
+											<a href="mailto://contact@mail.com">
+												1782764161@qq.com
+											</a>
+										</p>
+									</li>
+									<li>
+										<h4>
+											Wechat
+										</h4>
+										<p>
+											<a href="https://wpa.qq.com/msgrd?v=3&uin=123456&site=qq&menu=yes" target="_blank">
+												Graysanazw
+											</a>
+										</p>
+									</li>
+								</ul>
+							</div>
+							<div class="medium-6 columns social-links right">
+								<ul>
+									<li class="show-for-medium-up">
+										<h4>
+											QQ
+										</h4>
+										<p>
+											<a href="https://weixin.qq.com/">
+												1782764161
+											</a>
+										</p>
+									</li>
+									<li class="show-for-medium-up">
+										<h4>
+											寻觅踪迹
+										</h4>
+										<div class="socialnet">
+											<a href="https://space.bilibili.com/1604605786">
+												<i class="ion ion-social-facebook">
+												</i>
+											</a>
+											<a href="https://space.bilibili.com/1604605786">
+												<i class="ion ion-social-instagram">
+												</i>
+											</a>
+											<a href="https://space.bilibili.com/1604605786">
+												<i class="ion ion-social-twitter">
+												</i>
+											</a>
+											<a href="#">
+												<i class="ion ion-social-pinterest">
+												</i>
+											</a>
+											<a href="#">
+												<i class="ion ion-social-tumblr">
+												</i>
+											</a>
+										</div>
+									</li>
+									<li>
+										<p>
+											<img src="images/logo_large.png" alt="Logo" class="logo">
+										</p>
+										<p class="small">
+											Design by
+											<strong>
+												<a href="https://github.com/QiuHuJing">
+													婧婧
+												</a>
+											</strong>
+											 All right reserved 2025
+										</p>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</main>
+		<script src="js/jquery-1.11.2.min.js">
+		</script>
+		<script src="js/all.js">
+		</script>
+		<script src="js/jquery.downCount.js">
+		</script>
+		<script src="js/form_script.js">
+		</script>
+		<script src="js/main.js">
+		</script>
+	<script>
+		document.getElementById('neteasePlayBtn').addEventListener('click', function(e) {
+          e.preventDefault();
+
+          const playerContainer = document.getElementById('musicPlayer');
+
+          if(playerContainer.innerHTML === '') {
+            // 第一次点击时创建播放器
+            const iframe = document.createElement('iframe');
+            iframe.src = "http://music.163.com/outchain/player?type=2&id=1394402692&auto=1&height=66";
+            iframe.width = "100%";
+            iframe.height = "86";
+            iframe.frameBorder = "no";
+            iframe.allow = "autoplay";
+
+            playerContainer.appendChild(iframe);
+            playerContainer.style.display = 'block';
+
+            // 修改按钮文字
+            this.querySelector('.title').textContent = "正在播放";
+          } else {
+            // 切换显示/隐藏
+            playerContainer.style.display =
+              playerContainer.style.display === 'none' ? 'block' : 'none';
+          }
+        });
+	</script>
+	</html>
